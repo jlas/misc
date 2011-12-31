@@ -95,8 +95,8 @@ def process_file(filename):
         # find date range for year info
         found = re.findall('([0-1]?[0-9])/[0-3]?[0-9]/([12][0-9]{3})', line)
         if found:
-            for m, y in found:
-                years[m] = y
+            for mo, yr in found:
+                years[mo] = yr
 
         match = re.match('(%s)[ ]*(%s)(.*)' % (DATERE, AMTRE) , line)
         if match:
@@ -104,9 +104,9 @@ def process_file(filename):
             
             # format date properly
             date = match.groups()[0]
-            dt, mo = date.split('/')
-            yr = years.get(dt, '2001')
-            date = '%s-%s-%s' % (yr, dt, mo)
+            mo, dt = date.split('/')
+            yr = years.get(mo, '2001')
+            date = '%s-%s-%s' % (yr, mo, dt)
             curdata['date'] = date
 
             # format amount properly
