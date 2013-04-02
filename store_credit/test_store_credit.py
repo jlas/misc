@@ -1,5 +1,3 @@
-import sys
-import time
 import store_credit as sc
 
 def test_it():
