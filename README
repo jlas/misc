@@ -1,5 +1,6 @@
+statement2csv
+-------------
+
 Convert bank pdf statements to csv format.
 
 Requires pdfminer (http://www.unixuser.org/~euske/python/pdfminer/).
-
-See blog post at http://juanlasheras.blogspot.com/2011/12/statement2csvpy.html
