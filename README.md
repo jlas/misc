@@ -1,5 +1,11 @@
+- [opts_and_logs](#opts_and_logs)
 - [statement2csv](#statement2csv)
 - [store_credit](#store_credit)
+
+opts_and_logs
+-------------
+
+Example module for setting up OptionParser and Logging.
 
 statement2csv
 -------------
