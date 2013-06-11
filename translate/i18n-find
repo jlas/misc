@@ -1,0 +1,15 @@
+#!/usr/bin/env python
+
+import fileinput
+import re
+import sys
+
+text = ''.join([l.strip() for l in fileinput.input()])
+
+result = re.findall("__\(['\"]([^'\"]*)['\"]\)", text, re.DOTALL)
+
+if not result:
+    sys.exit(0)
+
+for r in result:
+    print '"%s",' % r
