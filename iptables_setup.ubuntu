@@ -2,6 +2,9 @@
 
 # setup iptables with basic rules to accept traffic from lo, ssh, and http
 
+# make sure you do:
+#  aptitude install iptables-persistent
+
 for cmd in iptables ip6tables; do
     sudo $cmd -A INPUT -p tcp --dport ssh -j ACCEPT
     sudo $cmd -A INPUT -p tcp --dport 80 -j ACCEPT
