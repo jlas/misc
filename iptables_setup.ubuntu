@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# setup iptables with basic rules to accept traffic from lo, ssh, and http
+
+for cmd in iptables ip6tables; do
+    sudo $cmd -A INPUT -p tcp --dport ssh -j ACCEPT
+    sudo $cmd -A INPUT -p tcp --dport 80 -j ACCEPT
+    sudo $cmd -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+    sudo $cmd -A INPUT -j DROP
+    sudo $cmd -I INPUT 1 -i lo -j ACCEPT
+    #sudo $cmd -I INPUT 5 -m limit --limit 5/min -j LOG --log-prefix "$cmd denied: " --log-level 7
+    sudo sh -c "$cmd-save > /etc/$cmd.rules"
+done
