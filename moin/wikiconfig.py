@@ -96,10 +96,11 @@ class Config(multiconfig.DefaultConfig):
     # IMPORTANT: grant yourself admin rights! replace YourName with
     # your user name. See HelpOnAccessControlLists for more help.
     # All acl_rights_xxx options must use unicode [Unicode]
-    #acl_rights_before = u"YourName:read,write,delete,revert,admin"
+    acl_rights_before = u"jlas:read,write,delete,revert,admin"
 
     # only allow logged in users to edit
-    acl_rights_default = u'Known:read,write,delete,revert All:read'
+    # acl_rights_default = u'Known:read,write,delete,revert All:read'
+    acl_rights_default = u'All:read'
 
     # The default (ENABLED) password_checker will keep users from choosing too
     # short or too easy passwords. If you don't like this and your site has
