@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+
+# This script takes a single csv file as input, iterates through the
+# first column, translates each phrase, and generates a two column
+# file with the translations. e.g.:
+#   - input file:
+#     "phrase1",
+#     "phrase2",
+#   - output file:
+#     "phrase1","translation1"
+#     "phrase2","translation2"
+
+import csv
+import sys
+
+from csv_i18n_common import encode
+
+usage = 'usage: %s /path/to/input_csv /path/to/output_csv' % sys.argv[0]
+if not len(sys.argv) > 2:
+   print usage
+   sys.exit(1)
+
+try:
+   infile, outfile = sys.argv[1:]
+except ValueError:
+   print 'error reading arguments'
+   print usage
+   sys.exit(1)
+
+with open(infile, 'r') as csv_infile:
+   reader = csv.reader(csv_infile)
+   source_rows = set([row[0] for row in reader])
+
+out_rows = encode(source_rows)
+with open(outfile, 'w') as csv_outfile:
+   writer = csv.writer(csv_outfile, quoting=csv.QUOTE_ALL)
+   writer.writerows(zip(source_rows, out_rows))

@@ -1,0 +1,45 @@
+#!/usr/bin/env python
+
+# This script looks at the content of two csv files, old_csv and new_csv
+#   - old_csv is a file containing your existing i18n definitions, e.g.:
+#     "blah blah", "blah blah"
+#     "something", "something"
+#   - new_csv is a file containing new i18n phrases, not yet translated, e.g.:
+#     "blah blah",
+#     "something",
+#
+# The script takes the phrasees in new_csv and, if they exist in old_csv, take
+# the translation from there. Then it outputs everthing to output_csv
+
+import csv
+import sys
+
+from csv_i18n_common import encode
+
+usage = 'usage: %s /path/to/old_csv /path/to/new_csv /path/to/output_csv' % sys.argv[0]
+if not len(sys.argv) > 3:
+   print usage
+   sys.exit(1)
+
+try:
+   oldfile, newfile, outfile = sys.argv[1:]
+except ValueError:
+   print 'error reading arguments'
+   print usage
+   sys.exit(1)
+
+with open(oldfile, 'r') as oldcsv, open(newfile, 'r') as newcsv:
+   old = dict([row[0:2] for row in csv.reader(oldcsv)])
+   new = dict([row[0:2] for row in csv.reader(newcsv)])
+
+# take only the new items and translate them
+source_rows = set(new) - set(old)
+out_rows = encode(source_rows)
+new_trans = dict(zip(source_rows, out_rows))
+
+# add back the old items
+new_trans.update(old)
+
+with open(outfile, 'w') as csv_outfile:
+   writer = csv.writer(csv_outfile, quoting=csv.QUOTE_ALL)
+   writer.writerows(new_trans.items())

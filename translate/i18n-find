@@ -1,5 +1,9 @@
 #!/usr/bin/env python
 
+# This script reads from stdin or from a list of files passed as params
+# and searches for i18n phrases, by looking for places where __("blah blah")
+# exist. Then it renders a single column csv of these phrases to stdout.
+
 import fileinput
 import re
 import sys
