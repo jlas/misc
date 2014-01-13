@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Magento installation script for Ubuntu 12.04
+
+sudo apt-get update
+sudo apt-get install apache2 php5 mysql-server php5-curl php5-gd php5-mcrypt php5-mysql
+
+# configure and restart apache
+sudo sed --in-place "s/AllowOverride None/AllowOverride All/" /etc/apache2/sites-enabled/000-default
+/etc/init.d/apache2 restart
+
+# download magento and sample data
+mkdir foobar
+cd foobar
+wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
+wget http://www.magentocommerce.com/downloads/assets/1.6.1.0/magento-sample-data-1.6.1.0.tar.gz
+tar -zxvf magento-1.7.0.2.tar.gz
+tar -zxvf magento-sample-data-1.6.1.0.tar.gz
+mv magento-sample-data-1.6.1.0/media/* magento/media/
+mv magento-sample-data-1.6.1.0/magento_sample_data_for_1.6.1.0.sql magento/data.sql
+mv magento/* magento/.htaccess .
+chmod o+w var var/.htaccess app/etc
+chmod -R o+w media
+
+# give everything write permission, is this ok?
+sudo chmod -R a+w ./
+
+# create database and load sample data
+echo "create database foobar" | mysql -u root -pasdf12
+mysql -h localhost -u root foobar < data.sql  # need to supply password with -p<password>
+
+# mage setup
+chmod 755 mage
+./mage mage-setup .
