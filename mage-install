@@ -10,6 +10,7 @@ sudo sed --in-place "s/AllowOverride None/AllowOverride All/" /etc/apache2/sites
 /etc/init.d/apache2 restart
 
 # download magento and sample data
+cd ~
 mkdir foobar
 cd foobar
 wget http://www.magentocommerce.com/downloads/assets/1.7.0.2/magento-1.7.0.2.tar.gz
@@ -32,3 +33,10 @@ mysql -h localhost -u root foobar < data.sql  # need to supply password with -p<
 # mage setup
 chmod 755 mage
 ./mage mage-setup .
+
+# link to /var/www
+sudo ln -s ~/foobar /var/www/
+
+# if you need to change the baseurl later on (e.g. if aws instance ip changes) use this sql script:
+# update core_config_data set value = "http://<ip>/foobar/" where path = "web/secure/base_url";
+# update core_config_data set value = "http://<ip>/foobar/" where path = "web/unsecure/base_url";
