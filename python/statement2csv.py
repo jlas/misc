@@ -4,7 +4,7 @@ import os
 import re
 import sys
 
-from cStringIO import StringIO  
+from cStringIO import StringIO
 from pdfminer.converter import LTChar, TextConverter
 from pdfminer.layout import LAParams
 from pdfminer.pdfparser import PDFDocument, PDFParser
@@ -41,13 +41,13 @@ class CsvConverter(TextConverter):
                     words[-1] += v
                 else:
                     words.append(v)
-                lastx = k                    
+                lastx = k
             self.outfp.write(" ".join(words))
             self.outfp.write("\n")
 
 # This function (slightly modified) from http://stackoverflow.com/a/1257121
 def pdf_to_csv(filename):
-    # ... the following part of the code is a remix of the 
+    # ... the following part of the code is a remix of the
     # convert() function in the pdfminer/tools/pdf2text module
     rsrc = PDFResourceManager()
     outfp = StringIO()
@@ -56,9 +56,9 @@ def pdf_to_csv(filename):
 
     doc = PDFDocument()
     fp = open(filename, 'rb')
-    parser = PDFParser(fp)       
-    parser.set_document(doc)     
-    doc.set_parser(parser)       
+    parser = PDFParser(fp)
+    parser.set_document(doc)
+    doc.set_parser(parser)
     doc.initialize('')
 
     interpreter = PDFPageInterpreter(rsrc, device)
@@ -101,7 +101,7 @@ def process_file(filename):
         match = re.match('(%s)[ ]*(%s)(.*)' % (DATERE, AMTRE) , line)
         if match:
             curdata = {'amt': '', 'date': '', 'desc': '', 'desc2': ''}
-            
+
             # format date properly
             date = match.groups()[0]
             mo, dt = date.split('/')
@@ -150,7 +150,7 @@ Then it prints out the transactions in a csv format.
 
     data = list()
     for f in files:
-        data += process_file(f)        
+        data += process_file(f)
 
     for d in sorted(data, key=lambda d: d['date']):
         print '%(date)s,%(desc)s %(desc2)s,%(amt)s' % d
