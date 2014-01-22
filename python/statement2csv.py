@@ -1,4 +1,9 @@
 #!/usr/bin/python
+"""
+Convert bank pdf statements to csv format.
+
+Requires pdfminer (http://www.unixuser.org/~euske/python/pdfminer/)
+"""
 
 import os
 import re

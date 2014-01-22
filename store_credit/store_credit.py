@@ -1,4 +1,7 @@
-"""Store Credit:
+"""Store Credit
+
+Programming exercise based on
+http://programmingpraxis.com/2011/02/15/google-code-jam-qualification-round-africa-2010/
 
 You receive a credit C at a local store and would like to buy some items.
 You first walk through the store and create a list L of all available
