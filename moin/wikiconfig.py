@@ -175,3 +175,4 @@ class Config(multiconfig.DefaultConfig):
 
     # stop new accounts being created
     actions_excluded = multiconfig.DefaultConfig.actions_excluded + ['newaccount']
+    actions_excluded.remove('xmlrpc')

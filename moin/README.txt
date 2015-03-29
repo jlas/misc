@@ -27,3 +27,13 @@ LoadModule proxy_http_module /usr/lib/apache2/modules/mod_proxy_http.so
         Allow from all
     </Location>
 </VirtualHost>
+
+# Adding a new user to MoinMoin
+
+    moin --config-dir=/usr/local/share/moin/ \
+         --wiki-url=http://wiki.juanl.org \
+         account create \
+         --name="username" \
+         --password="password" \
+         --email="email" \
+         --alias="username"
