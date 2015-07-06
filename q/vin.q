@@ -30,9 +30,13 @@ validvin:{[s]
  // see http://people.virginia.edu/~sns5r/resint/empiostf/checkdigit.htm
  weights:8 7 6 5 4 3 2 10 0 9 8 7 6 5 4 3 2f;
 
- {[a2d; wts; s]
+ r:{[a2d; wts; s]
   $[s[8] = "X"; [chkdgt: 10]; [chkdgt: a2d["i"$s[8]]]];
   l2: {[a2d; x] "f"$a2d["i"$x]}[a2d; ] each s;
   dot:l2$wts;
   remain: dot mod 11;
-  chkdgt = remain}[ascii2dec; weights; ] each s}
+  chkdgt = remain}[ascii2dec; weights; ] each s;
+
+ if[(count r) = 1; :r[0]];
+
+ r}
