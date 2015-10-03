@@ -10,14 +10,6 @@ void swap (int arr[], int aIdx, int bIdx) {
   arr[bIdx] = tmp;
 }
 
-void printarr(int arr[], int size) {
-  int i;
-  printf("size: %d\n", size);
-  for (i = 0; i < size; i++) {
-    printf("%d ", arr[i]);
-  }
-}
-
 int partition(int arr[], int left, int right, int pivotIdx) {
   int pivotVal = arr[pivotIdx];
   int storeIdx = left;
@@ -109,6 +101,18 @@ void topDownSplitMerge(int * arr, int iBegin, int iEnd, int * aux) {
 
 void topDownMergeSort(int * arr, int * aux, int size) {
   topDownSplitMerge(arr, 0, size, aux);
+}
+
+/**
+ * Blah
+ */
+
+void printarr(int arr[], int size) {
+  int i;
+  printf("size: %d\n", size);
+  for (i = 0; i < size; i++) {
+    printf("%d ", arr[i]);
+  }
 }
 
 int main (int argc, char* argv []) {
