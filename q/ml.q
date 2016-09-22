@@ -26,7 +26,12 @@ hlpr:{[t;k;means]
 
 kmeans:{[t;k]
  means:t[k?count t];
- hlpr[t;k;means]}
+ diff:(k;count t[0])#1;
+ while[any any diff;
+  omeans:means;
+  means:hlpr[t;k;means];
+  diff:0.01<abs omeans-means];
+ means}
 
 /masks:{(x =) each cluster} each til k;
 /(sum flip r * masks) % sum flip masks}
