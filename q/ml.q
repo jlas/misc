@@ -5,6 +5,11 @@
  *   q)t:(`a`b`c!) each {3?100} each til 1000000
  *   q)\ts knn[t;1 1 1;5]
  *   2155 136389072
+ *
+ * iris test:
+ *   q)iris:flip `sl`sw`pl`pw`class!("FFFFS";",") 0: `:iris.csv
+ *   q)\ts kmeans[delete class from iris;3]
+ *   25 77184
 \
 knn:{[t;p;k]
  dist:sqrt (+/) each xexp[;2] each (p -) each (value each t);
@@ -14,8 +19,8 @@ knn:{[t;p;k]
  * k means clustering
 \
 hlpr:{[t;k;means]
- f:{sqrt (+/) each xexp[;2] each (x -) each (value each t)};
- r:f each means;
+ f:{[t;x] sqrt (+/) each xexp[;2] each (x -) each (value each t)};
+ r:f[t;] each means;
  zipped:{[k;x] (til k) ,' x}[k;] each flip r;
  cluster:first flip ({$[last x < last y;x;y]} over) each zipped;
  / 1st column keeps count
@@ -31,7 +36,7 @@ kmeans:{[t;k]
   omeans:means;
   means:hlpr[t;k;means];
   diff:0.01<abs omeans-means];
- means}
+ flip (cols t)!flip means}
 
 /masks:{(x =) each cluster} each til k;
 /(sum flip r * masks) % sum flip masks}
