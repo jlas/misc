@@ -40,3 +40,49 @@ kmeans:{[t;k]
 
 /masks:{(x =) each cluster} each til k;
 /(sum flip r * masks) % sum flip masks}
+
+entropy:{
+ cnt:sum x;
+ p:x%cnt;
+ -1*sum p*xlog[2;p]}
+
+/
+ * t is table where 1st col is attribute and remaining cols are class counts
+ * for each value in attribute, e.g.
+ *
+ * attr1 class1 class2
+ * -------------------
+ * 0     25     75
+ * 1     33     67
+ * ...
+ *
+ * cls is list of classes e.g. `class1`class2
+ * clscnt is list of occurances of each class
+ * setcnt is count of instances
+\
+ighlpr:{[t;cls;clscnt;setcnt]
+ e:entropy each flip t[cls];
+ p:(sum each flip t[cls])%setcnt;
+ entropy[clscnt] - sum e*p}
+
+/
+ * test:
+ *   / random integers with class labels:
+ *   q)t:flip (`a`b`c`class!) flip {(3?100),1?`A`B`C} each til 10000
+ *   q)infogain[t] each `a`b`c
+ *   0.01451189 0.01573281 0.01328462
+\
+infogain:{[tbl;attrib]
+ cls:exec distinct class from tbl;
+ clscnt:(exec count i by class from tbl)[cls];
+ setcnt:count tbl;
+ d:distinct tbl[attrib];
+
+ / change attrib colname for ease of use with select syntax
+ t2:(`a xcol attrib xcols select from tbl);
+ t2:select count i by a, class from t2;
+ / create empty table to hold pivot
+ t3:flip (`a,cls)!(enlist[d],{[d;x]count[d]#0}[d;] each til count cls);
+ / pivot t2, change class column to a column per class value
+ t3:{x lj `a xkey flip (`a,y[`class])!(enlist y[`a];enlist y[`x])} over (enlist t3),0!t2;
+ ighlpr[t3;cls;clscnt;setcnt]}
