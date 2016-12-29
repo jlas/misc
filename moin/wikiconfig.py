@@ -75,7 +75,7 @@ class Config(multiconfig.DefaultConfig):
     # name of entry page / front page [Unicode], choose one of those:
 
     # a) if most wiki content is in a single language
-    page_front_page = u"MyStartingPage"
+    page_front_page = u"HomePage"
 
     # b) if wiki content is maintained in many languages
     #page_front_page = u"FrontPage"
@@ -138,13 +138,13 @@ class Config(multiconfig.DefaultConfig):
     navi_bar = [
         # If you want to show your page_front_page here:
         u'%(page_front_page)s',
-        u'RecentChanges',
-        u'FindPage',
-        u'HelpContents',
+        #u'RecentChanges',
+        #u'FindPage',
+        #u'HelpContents',
     ]
 
     # The default theme anonymous or new users get
-    theme_default = 'modernized'
+    theme_default = 'modernized_cms'
 
 
     # Language options --------------------------------------------------
