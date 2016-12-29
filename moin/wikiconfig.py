@@ -100,7 +100,7 @@ class Config(multiconfig.DefaultConfig):
 
     # only allow logged in users to edit
     # acl_rights_default = u'Known:read,write,delete,revert All:read'
-    acl_rights_default = u'All:read'
+    acl_rights_default = u'xmlrpc: All:'
 
     # The default (ENABLED) password_checker will keep users from choosing too
     # short or too easy passwords. If you don't like this and your site has
