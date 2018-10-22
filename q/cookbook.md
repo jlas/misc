@@ -31,7 +31,7 @@ q)diag[t]
  * See https://arxiv.org/abs/1502.07541
 ```
 / x is a square matrix (list of float vectors)
-edm:{x mmu flip[x]; diag[m] + flip diag[m] - 2*m}
+edm:{m:x mmu flip[x]; diag[m] + flip diag[m] - 2*m}
 
 / e.g.
 q)t:(41.2317 98.77844 38.67353; 72.6781 40.46546 83.55065; 64.2737 58.30262 14.24935)
