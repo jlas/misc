@@ -27,4 +27,24 @@ q)t
 q)diag[t]
 41.2317 40.46546 14.24935
 ```
+### Euclidean distance matrix (edm)
+ * See https://arxiv.org/abs/1502.07541
+```
+/ x is a square matrix (list of float vectors)
+edm:{x mmu flip[x]; diag[m] + flip diag[m] - 2*m}
 
+/ e.g.
+q)t:(41.2317 98.77844 38.67353; 72.6781 40.46546 83.55065; 64.2737 58.30262 14.24935)
+q)edm[t]
+0        6403.236 2765.767
+6403.236 0        5191.468
+2765.767 5191.468 0
+```
+ * Double check with Python
+```python
+>>> import numpy as np
+>>> from scipy.spatial.distance import pdist
+>>> a = np.array([[41.2317, 98.77844, 38.67353],[72.6781, 40.46546, 83.55065],[64.2737, 58.30262, 14.24935]])
+>>> pdist(a)**2
+array([6403.23560893, 2765.76633734, 5191.46839792])
+```
