@@ -3,6 +3,7 @@
 ```
 ident_v1:{[N] reverse (`int$) each #[-1*N;] each (0b vs) each (`int$) each xexp[2;] each til N}
 ident_v2:{[N] {(x#0),1,(y-x+1)#0}[;N] each til N}
+ident_v3:{[N] rotate[;1,(N-1)#0] each -1*til N}
 
 / e.g.
 q)ident_v1[3]
@@ -13,6 +14,8 @@ q)\ts ident_v1[100]
 0 65312
 q)\ts ident_v2[100]
 0 105328
+q)\ts ident_v3[100]
+0 106400
 
 / Note: ident_v1 does not work when xexp[2;N] is too large to represent
 ```
