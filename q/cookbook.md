@@ -13,6 +13,8 @@ q)\ts ident_v1[100]
 0 65312
 q)\ts ident_v2[100]
 0 105328
+
+/ Note: ident_v1 does not work when xexp[2;N] is too large to represent
 ```
 ### Extract diagonal from a matrix
 ```
