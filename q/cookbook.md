@@ -1,6 +1,41 @@
 # kdb+/q cookbook
-### Generate an identity matrix with dimension N
+
+### Setting items into a context from a dictionary
+
+```q
+/ d is some dictionary
+((set) .) each (enlist each key[d]),'(enlist each value[d])
+
+/ e.g.
+q)t1:([] x:1 2 3; y:11 12 13)
+q)t2:([] a:100 200 300; b:10 20 30)
+q)d:`t1`t2!(t1;t2)
+q)delete t1, t2 from `.
+`.
+q)t1
+'t1
+  [0]  t1
+       ^
+q)t2
+'t2
+  [0]  t2
+q)((set) .) each (enlist each key[d]),'(enlist each value[d])
+`t1`t2
+q)t1
+x y
+----
+1 11
+2 12
+3 13
+q)t2
+a   b
+------
+100 10
+200 20
 ```
+
+### Generate an identity matrix with dimension N
+```q
 ident_v1:{[N] reverse (`int$) each #[-1*N;] each (0b vs) each (`int$) each xexp[2;] each til N}
 ident_v2:{[N] {(x#0),1,(y-x+1)#0}[;N] each til N}
 ident_v3:{[N] rotate[;1,(N-1)#0] each -1*til N}
@@ -20,7 +55,7 @@ q)\ts ident_v3[100]
 / Note: ident_v1 does not work when xexp[2;N] is too large to represent
 ```
 ### Extract diagonal from a matrix
-```
+```q
 diag:{(x .) each til[count x],'til count[x]}
 
 / e.g.
@@ -34,7 +69,7 @@ q)diag[t]
 ```
 ### Euclidean distance matrix (edm)
  * See https://arxiv.org/abs/1502.07541
-```
+```q
 / x is a square matrix (list of float vectors)
 edm:{m:x mmu flip[x]; diag[m] + flip diag[m] - 2*m}
 
